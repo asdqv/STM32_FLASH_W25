@@ -104,7 +104,8 @@ void w25_Read_Data(uint32_t addr, uint8_t *dat, uint32_t sz){
 	tx_buf[1] = (addr >> 16) & 0xFF;
 	tx_buf[2] = (addr >> 8) & 0xFF;
 	tx_buf[3] = addr & 0xFF;
-	SPI1_Send(dat, sz);
+	SPI1_Send(tx_buf, 4);
+	SPI1_Recv(rx_buf, sz);
 	cs_reset();
 }
 uint32_t w25_Read_ID(void){

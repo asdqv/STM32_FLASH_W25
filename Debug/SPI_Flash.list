@@ -37,15 +37,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_macro  00016f9c  00000000  00000000  0000f5d8  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   00009a20  00000000  00000000  00026574  2**0
+ 17 .debug_line   00009a21  00000000  00000000  00026574  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    00083b3d  00000000  00000000  0002ff94  2**0
+ 18 .debug_str    00083b3d  00000000  00000000  0002ff95  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  000b3ad1  2**0
+ 19 .comment      00000043  00000000  00000000  000b3ad2  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  000025c4  00000000  00000000  000b3b14  2**2
+ 20 .debug_frame  000025c4  00000000  00000000  000b3b18  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 00000059  00000000  00000000  000b60d8  2**0
+ 21 .debug_line_str 00000059  00000000  00000000  000b60dc  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -169,9 +169,9 @@ void w25_Reset(void){
  80001e0:	20000138 	.word	0x20000138
 
 080001e4 <w25_Read_ID>:
-	tx_buf[2] = (addr >> 8) & 0xFF;
 	tx_buf[3] = addr & 0xFF;
-	SPI1_Send(dat, sz);
+	SPI1_Send(tx_buf, 4);
+	SPI1_Recv(rx_buf, sz);
 	cs_reset();
 }
 uint32_t w25_Read_ID(void){
